@@ -1,0 +1,75 @@
+0. Pre
+
+- no silver bullets, one program should use any technique that suitable to the problems
+- each one have their places
+
+
+1. Callback
+
+- not really about nesting, indentation
+- only ways to ordering callback -> call them serial but not good for perform, parallell can do by have smt global state
+- 2 problems: 
+  Prob 1: IoC, in control of current, not in-controll of later
+  - do not have control when, how, how many times it get executed -> trust issue?
+  - trust: 
+    - not too early
+    - not too late
+    - not too many times 
+    - not too few times 
+    - no lost context 
+    - no swallowed errors
+    => no solution for this trust issue
+
+  Prob 2: Not Reasonable
+    - brain: works as sequentially
+    - bugs come when brain and js engine diverse
+    - non fixes: 
+        SPLIT CALLBACKS: dont call with 2 params ? , call with 2 params?
+        ERROR FIRSTS:
+        NESTED CALLBACK TASKS:
+
+2. Thunks
+
+  - on top of callback
+  - sync concept: a function already has everything to call (some closure keep track of state)
+  - async: need to pass callback to get value out
+  - time is the most complex state in program
+  - does not solve IoC 
+  - lazy or active ?
+  - does not really solved callback probs but remove time as the complex factor
+
+3. Promises
+
+  - get back control
+  - promise are eager
+  - IoC terrible in async
+  - still callback? Promise trust:
+    1. only resolved once
+    2. either success OR errors
+    3. message passed/kept
+    4. exceptions become errors
+    5. immutable once resolved
+  - main point is IoC, still dealing with promise hell
+  - action at distance
+  - Kyle: readability, use function declaration
+  - Abstractions: Promise.all, Promise.any, Promise.race -> called gate
+
+4. Generators
+  - Function Chars: Run to completion
+  - think inside: yield as a placeholder for future value
+  - generator does not have to finish
+  - dont send first value to first next call
+  - need to control how to run next func -> dont let many people run the generator
+  -> come back to IoC prob -> what happend when people run multiple next() call?
+  Solution: Combine promise + generator -> async function
+  Caveat of async function: run to completion, can not abort
+
+5. Observables
+  - Event + Promise
+  - SoC: source vs subscription
+  - Promise not work well in Event Oriented Program 
+
+6. CSP (Communicating Sequential Processes)
+  - Concurrenycy + Channels
+  
+
